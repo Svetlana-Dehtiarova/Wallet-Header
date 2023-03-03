@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-import { selectContacts } from 'redux/selectors';
-import { addContact } from 'redux/operations';
+import { selectContacts } from 'redux/contacts/selectors';
+import { addContact } from 'redux/contacts/operations';
 import css from './ContactForm.module.css';
 
-export default function ContactForm() {
+export function ContactForm() {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
 
   const handleChange = e => {
-    const prop = e.currentTarget.name;
-    switch (prop) {
+    const { name, value } = e.currentTarget;
+    switch (name) {
       case 'name':
-        setName(e.currentTarget.value);
+        setName(value);
         break;
-      case 'phone':
-        setPhone(e.currentTarget.value);
+      case 'number':
+        setNumber(value);
         break;
       default:
-        throw new Error('Error');
+        return;
     }
   };
 
@@ -31,33 +32,39 @@ export default function ContactForm() {
     const data = {
       id: nanoid(),
       name: name,
-      phone: phone,
+      number: number,
     };
     if (
       contacts.some(
         contact =>
           contact.name.toLowerCase() === data.name.toLowerCase() ||
-          contact.phone === data.phone
+          contact.number === data.number
       )
     ) {
-      alert(
-        `Name: ${data.name} or number: ${data.phone} is already in phonebook`
+      Notify.warning(
+        `Name: ${data.name} or number: ${data.number} is already in phonebook`,
+        {
+          background: '#eebf31',
+          fontSize: '16px',
+          width: '350px',
+        }
       );
       return;
     }
 
     dispatch(addContact(data));
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
       <label>
-        Name
+        Name:
         <input
           className={css.inputName}
           value={name}
+          placeholder="Contact name..."
           onChange={handleChange}
           type="text"
           name="name"
@@ -67,13 +74,14 @@ export default function ContactForm() {
         />
       </label>
       <label>
-        Number
+        Number:
         <input
           className={css.inputNumber}
-          value={phone}
+          value={number}
+          placeholder="Contact phone number..."
           onChange={handleChange}
           type="tel"
-          name="phone"
+          name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required

@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { filterContact } from 'redux/contactSlice';
+import { filterContact } from 'redux/contacts/contactSlice';
 
-import { selectFilter } from 'redux/selectors';
+import { selectFilter } from 'redux/contacts/selectors';
 import css from './Filter.module.css';
 
-const Filter = () => {
+export const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(selectFilter);
 
@@ -20,10 +20,9 @@ const Filter = () => {
           value={filter}
           onChange={filterChange}
           className={css.filterInput}
+          placeholder="Search..."
         />
       </label>
     </div>
   );
 };
-
-export default Filter;

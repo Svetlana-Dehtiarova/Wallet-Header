@@ -1,16 +1,16 @@
 import { useSelector } from 'react-redux';
-import { selectFilteredContacts } from 'redux/selectors';
+import { selectFilteredContacts } from 'redux/contacts/selectors';
 import ContactItem from '../ContactItem/ContactItem';
 import css from './ContactList.module.css';
 
-const ContactList = () => {
+export const ContactList = () => {
   const contacts = useSelector(selectFilteredContacts);
 
   return (
     <ul className={css.list}>
       {contacts.length ? (
-        contacts.map(({ id, name, phone }) => (
-          <ContactItem key={id} id={id} name={name} phone={phone} />
+        contacts.map(({ id, name, number }) => (
+          <ContactItem key={id} id={id} name={name} number={number} />
         ))
       ) : (
         <p className={css.text}>
@@ -20,5 +20,3 @@ const ContactList = () => {
     </ul>
   );
 };
-
-export default ContactList;

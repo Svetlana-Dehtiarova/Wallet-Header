@@ -1,0 +1,75 @@
+/* Styled Home */
+.homePage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 150px;
+}
+.homeTitle {
+  text-align: center;
+  font-weight: 900px;
+  font-size: 40px;
+  color: rgb(3, 123, 175);
+  text-shadow: 1px 3px 3px rgb(15, 215, 215);
+}
+
+.subTitle {
+  color: rgb(3, 123, 175);
+  text-shadow: 1px 3px 3px rgb(15, 215, 215);
+  font-size: 40px;
+  margin-bottom: 60px;
+}
+.linkHome {
+  text-decoration: none;
+}
+
+/* // Styled Login */
+.css.loginPage {
+  display: block;
+  align-items: center;
+  flex-direction: column;
+  min-height: calc(100vh - 50px);
+}
+
+.titleLogin {
+  text-align: center;
+  font-weight: 500px;
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: rgb(3, 123, 175);
+  text-shadow: 1px 3px 3px rgb(15, 215, 215);
+}
+
+/* // Styled Contacts */
+.contsctsPage {
+  font-size: 32px;
+  color: #010101;
+  min-height: calc(100vh - 10px);
+  padding: 20px;
+}
+.titleContacts {
+  text-align: center;
+  font-weight: 500px;
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: rgb(3, 123, 175);
+  text-shadow: 1px 3px 3px rgb(15, 215, 215);
+}
+.contactsWrap {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.contactsItem {
+  display: flex;
+  flex-direction: column;
+}
+
+/* //Not found */
+.button {
+  margin-left: 20px;
+  text-decoration: transparent;
+  color: aliceblue;
+}

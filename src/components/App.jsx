@@ -1,40 +1,72 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts, selectError, selectIsLoading } from 'redux/selectors';
-import { fetchContacts } from 'redux/operations';
-
-import ContactList from './ContactList/ContactList';
-import ContactForm from './ContactForm/ContactForm';
-import Filter from './Filter/Filter';
+import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+import { PublicRoute } from './PublicRoute/PublicRoute';
+import { refreshUser } from 'redux/auth/operations';
+import { selectIsRefreshing } from 'redux/auth/selectors';
 import { Loader } from './Loader/Loader';
-
+import { Layout } from './Layout/Layout';
 import css from './App.module.css';
 
+const Home = lazy(() => import('../pages/HomePage'));
+const Register = lazy(() => import('../pages/RegisterPage'));
+const Login = lazy(() => import('../pages/LoginPage'));
+const Contacts = lazy(() => import('../pages/ContactsPage'));
+const NotFound = lazy(() => import('../pages/NotFoundPage'));
+
 export function App() {
-  const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
   const dispatch = useDispatch();
+  const isFetchingCurrentUser = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return (
-    <div>
-      <h1 className={css.phonBookTitle}>Phonebook</h1>
-      <ContactForm />
-      <h2 className={css.titleContacts}>Contacts</h2>
-      {contacts.length > 0 ? (
-        <>
-          <Filter />
-          <ContactList />
-        </>
+    <div className={css.conteiner}>
+      {isFetchingCurrentUser ? (
+        <Loader />
       ) : (
-        <p>Phonebook is empty. Please, add your first contact:)</p>
+        <>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Navigate to="home"></Navigate>} />
+                <Route path="/home" element={<Home />} />
+                <Route
+                  path="/register"
+                  element={
+                    <PublicRoute restricted>
+                      {' '}
+                      <Register />{' '}
+                    </PublicRoute>
+                  }
+                />
+                <Route
+                  path="/login"
+                  element={
+                    <PublicRoute restricted>
+                      {' '}
+                      <Login />{' '}
+                    </PublicRoute>
+                  }
+                />
+                <Route
+                  path="/contacts"
+                  element={
+                    <PrivateRoute>
+                      {' '}
+                      <Contacts />{' '}
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </Suspense>
+        </>
       )}
-      {error && <p>Oops... Something went wrong :(</p>}
-      {isLoading && <Loader />}
     </div>
   );
 }

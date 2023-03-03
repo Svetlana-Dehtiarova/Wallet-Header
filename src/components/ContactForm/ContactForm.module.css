@@ -10,9 +10,10 @@
 }
 
 label {
+  font-size: 24px;
   margin-bottom: 10px;
-  color: #fff;
   color: rgb(3, 123, 175);
+  text-shadow: 1px 3px 3px rgb(251, 253, 253);
 }
 
 label:last-child {
@@ -20,7 +21,7 @@ label:last-child {
 }
 
 .inputName {
-  margin-left: 28px;
+  margin-left: 0px;
   border-radius: 5px;
   border: 2px solid rgb(3, 123, 175);
   color: rgb(3, 123, 175);
@@ -33,7 +34,7 @@ label:last-child {
   outline: none;
 }
 .inputNumber {
-  margin-left: 10px;
+  margin-left: 0px;
   border-radius: 5px;
   border: 2px solid rgb(3, 123, 175);
   color: rgb(3, 123, 175);
