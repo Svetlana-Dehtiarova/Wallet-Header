@@ -68,8 +68,13 @@
 }
 
 /* //Not found */
+.smalTitle {
+  margin-left: 20px;
+  color: rgb(15, 215, 215);
+}
+
 .button {
   margin-left: 20px;
-  text-decoration: transparent;
+  text-decoration: none;
   color: aliceblue;
 }

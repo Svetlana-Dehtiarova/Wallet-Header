@@ -30,8 +30,8 @@ button {
   border: 2px solid rgb(3, 123, 123);
   box-shadow: 2px 5px 5px rgb(15, 215, 215);
   text-shadow: 2px 4px 6px rgb(15, 215, 215);
-  padding: 20px;
-  margin-top: 20px;
+  padding: 10px 40px;
+  margin-top: 10px;
 }
 
 button:hover,
